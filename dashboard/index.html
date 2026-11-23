@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — pre-token launch values, ranked</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header>
+<h1>Token Radar</h1>
+<p class="sub">Which pre-token protocol is worth farming next — ranked by what its launch would be worth, with the steps to farm it.</p>
+<div id="strip" class="strip">Loading the board…</div>
+</header>
+<main>
+<div class="controls">
+<input id="q" type="search" placeholder="Search protocol…" aria-label="Search">
+<select id="verdict" aria-label="Verdict"><option value="">All verdicts</option><option>FARM</option><option>THIN</option><option>SKIP</option></select>
+<select id="chain" aria-label="Chain"><option value="">All chains</option></select>
+<label class="watch"><input id="watchonly" type="checkbox"> Watchlist only</label>
+<span id="count" class="count"></span>
+</div>
+<table id="board">
+<thead><tr>
+<th data-k="rank">#</th><th data-k="name">Protocol</th><th data-k="chain">Chain</th>
+<th data-k="tvl">TVL</th><th data-k="chg">7d</th><th data-k="age">Age</th>
+<th data-k="implied">Implied value</th><th data-k="odds">Odds</th>
+<th data-k="verdict">Verdict</th><th data-k="cost">Farm cost</th>
+</tr></thead>
+<tbody id="rows"></tbody>
+</table>
+<p class="hint">Click a row for its value breakdown and farm plan. Click a column header to sort.</p>
+
+<section>
+<h2>How the value is priced</h2>
+<p>Implied value = <code>exp(a + b·ln(TVL)) × growth × maturity × odds</code>.
+The size curve is refit in this page from the <span id="m-n">128</span> traded protocols
+in the snapshot: a = <span id="m-a">…</span>, b = <span id="m-b">…</span>,
+R² = <span id="m-r2">…</span>. Held-out 5-fold log-RMSE:
+fitted <span id="m-held-f">…</span> vs flat median multiple <span id="m-held-l">…</span>.
+<span id="m-recomputed">…</span> rows recomputed in this page from the raw inputs.</p>
+<p>Growth uses the 7-day TVL change as per cent:
+<code>1 + clamp(change_7d, −60, 120)/100 × 0.5</code>.
+Maturity is <code>0.6 + 0.4·min(age, 1095)/1095</code>.
+Every row below was computed by this page from the snapshot's own figures —
+no protocol is ranked by name.</p>
+</section>
+
+<section>
+<h2>About the odds — read this before trusting the ranking</h2>
+<p><strong>Smooth odds, assumed — not fitted.</strong> The board's odds fall with
+age: <code>0.55·exp(−age/1500) + 0.08</code>. That is a survival-hazard framing,
+stated explicitly as an assumption: a single snapshot cannot estimate a
+survival hazard, because it carries no listing dates. The cross-sectional
+evidence points the other way — older protocols in this snapshot are more
+likely to already record a token — so the falling odds are a modelling choice,
+not a finding. Log-loss as a cross-sectional predictor of recording a token:
+fitted logit <span id="h-fit">…</span>, smooth exponential odds
+<span id="h-assumed">…</span>, base rate <span id="h-base">…</span>.
+The logit answers P(records a token | age); the board's odds answer the
+different question P(eventually lists | still no token at this age).</p>
+</section>
+
+<section>
+<h2>Coverage</h2>
+<p id="coverage">The snapshot holds 758 protocols. 342 record no token; 198 of
+them can be priced and are ranked below, including all 40 watchlist protocols.
+The other 144 pre-token protocols are excluded by the watchlist rule (centralized
+exchanges, bridges, liquid staking and restaking, versioned or wrapped/staked
+products, exchange-named products). 128 traded protocols anchor the size curve.</p>
+</section>
+</main>
+<footer>
+<p>Snapshot as of <span id="asof">2026-11-14</span>. A protocol is described as
+recording no token when its DefiLlama record carries none — the record is not
+proof it has none. Implied values are this radar's own claims, never the
+snapshot's.</p>
+</footer>
+<dialog id="detail"><div id="detail-body"></div><form method="dialog"><button>Close</button></form></dialog>
+<script src="app.js"></script>
+</body>
+</html>

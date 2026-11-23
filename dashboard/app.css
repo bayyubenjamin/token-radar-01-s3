@@ -1,0 +1,41 @@
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#f7f8fa;color:#17202b;line-height:1.45}
+header{background:#0e2a47;color:#fff;padding:28px 24px 20px}
+header h1{margin:0 0 4px;font-size:30px;letter-spacing:-.5px}
+header .sub{margin:0 0 14px;color:#c7d6e6;max-width:900px}
+.strip{background:#12395e;border:1px solid #2b587e;border-radius:8px;padding:10px 14px;font-size:14px;color:#eaf2fa}
+.strip b{color:#ffd166}
+main{max-width:1180px;margin:0 auto;padding:18px 20px 30px}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:6px 0 12px}
+.controls input[type=search]{flex:1;min-width:200px;padding:9px 12px;border:1px solid #c4ccd6;border-radius:6px;font-size:15px}
+.controls select{padding:9px 10px;border:1px solid #c4ccd6;border-radius:6px;font-size:15px;background:#fff}
+.controls .watch{font-size:14px;color:#33414f}
+.controls .count{margin-left:auto;font-size:14px;color:#5b6b7c}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #dbe2ea;border-radius:8px;overflow:hidden;font-size:14px}
+thead th{background:#eef2f6;text-align:left;padding:10px 10px;border-bottom:1px solid #dbe2ea;cursor:pointer;white-space:nowrap}
+thead th:hover{color:#0e2a47;text-decoration:underline}
+tbody td{padding:8px 10px;border-bottom:1px solid #eef1f4;white-space:nowrap}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:#f0f6fc}
+td.num,th.num{text-align:right}
+td.name{font-weight:600;white-space:normal;min-width:150px}
+.pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700}
+.pill.FARM{background:#dcf5e3;color:#14532d}
+.pill.THIN{background:#fef3c7;color:#92400e}
+.pill.SKIP{background:#e5e7eb;color:#374151}
+.star{color:#b45309;font-weight:700}
+.hint{font-size:13px;color:#5b6b7c}
+section{background:#fff;border:1px solid #dbe2ea;border-radius:8px;padding:14px 18px;margin:16px 0}
+section h2{margin:0 0 6px;font-size:17px;color:#0e2a47}
+section p{margin:6px 0;font-size:14px;color:#33414f}
+code{background:#eef2f6;padding:1px 5px;border-radius:4px;font-size:13px}
+footer{max-width:1180px;margin:0 auto;padding:0 20px 28px;font-size:13px;color:#5b6b7c}
+dialog{border:1px solid #c4ccd6;border-radius:10px;padding:20px 22px;max-width:640px;width:92%}
+dialog h3{margin:0 0 4px;font-size:20px}
+dialog .meta{font-size:13px;color:#5b6b7c;margin:0 0 12px}
+dialog table{font-size:13px;margin:0 0 12px}
+dialog td:first-child{color:#5b6b7c}
+dialog ol{margin:8px 0;padding-left:22px;font-size:14px}
+dialog ol li{margin:5px 0}
+dialog button{padding:8px 16px;border:1px solid #c4ccd6;border-radius:6px;background:#0e2a47;color:#fff;font-size:14px;cursor:pointer}
+.note{background:#fff8e1;border:1px solid #f5d67b;border-radius:6px;padding:8px 12px;font-size:13px;margin:10px 0}

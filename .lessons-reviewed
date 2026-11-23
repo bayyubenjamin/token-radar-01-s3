@@ -1,0 +1,49 @@
+# Lessons reviewed — token-radar-01 S3 (round 3)
+# Read before building: stage2-diagnosis-report.md + stage3-build-report.md.
+# Each lesson below changed a concrete decision in this entry.
+
+1. GROWTH IS PER CENT, NOT A FRACTION (S2's fatal bug).
+   change_7d in the snapshot is per cent (median -6.82%). S2 computed
+   growth = 1 + clamp(change_7d, -0.5, 1.0), which made growth a binary
+   step: 135/200 rows at the 0.5 floor, 35 at the 2.0 ceiling. S3 uses the
+   S1 formula: 1 + clamp(change_7d, -60, 120)/100 * 0.5, and displays the
+   7d figure as-is (e.g. +2.37%, never 236.7%).
+2. ODDS MUST BE SMOOTH AND FALL WITH AGE (S2's second bug).
+   S2's buckets (0.467/0.245/0.123/0.084) had 2x cliffs at 90/365/1095
+   days; median implied value fell to 24% of S1's. S3 uses S1's smooth
+   exponential 0.55*exp(-age/1500)+0.08. The logit curve recommended by
+   the diagnosis §5.2 was VERIFIED WRONG before this build: it is a
+   cross-sectional fit whose odds RISE with age, and it reproduced only
+   6/10 of S1's top 10 (mean |dRank| 29.5). The logit (and its sign-flipped
+   twin, an anti-fit at log-loss 0.8335) are banned from this entry.
+3. LABEL THE ODDS HONESTLY.
+   The falling odds are an ASSUMPTION (survival-hazard framing), not a
+   fit. The dashboard states this, with the cross-sectional numbers
+   (fitted logit 0.651 vs assumed 0.811 vs base 0.693) computed live from
+   the snapshot — never presented as proof the odds are fitted.
+4. GAS IS PER CHAIN OF THE ACTION.
+   S2 priced every action at the cheapest chain's gas, putting a $0.01
+   Solana figure on an Ethereum action. S3 uses a per-chain gas table
+   (Ethereum $8.00) and never adds a bridge step for a protocol that is
+   already on Ethereum.
+5. VERSIONED MEANS A VERSION MARKER, NOT A BARE NUMBER.
+   "Project 0" is rankable: a bare "0" is not a version marker. The rule
+   is a space followed by V2/v2/2.0-style markers. With this correction
+   the rankable set is exactly S1's 198 rows (verified against its board).
+6. VERDICT THRESHOLDS ARE PRINCIPLED, NOT FITTED TO S1.
+   FARM if EV > 2x total farm cost, THIN if EV > 0, SKIP if EV <= 0 or a
+   model input is unreported. Thresholds were NOT tuned to reproduce
+   S1's 159/29/10 split; the resulting split (189/0/9) is reported as-is.
+7. THE JUDGE READS ONLY THE DOSSIER.
+   main.ts, board.json and data files never reach the judge. The model
+   must be visible: app.js refits the curve and recomputes all 198 rows
+   in the browser, the strip answers the rubric in order, and the
+   screenshots must agree with the code.
+8. NEVER ADD/EDIT FILES AFTER THE RECORDING IS SEALED (gta6-01 lesson).
+   The repo is built once, verified, then frozen; the bundle is built
+   from the sealed session.
+9. AUTHORSHIP: WRITE, DON'T COPY.
+   No S1/S2/starter source was read for this entry. Every code line was
+   written fresh in this session from the prose spec; the kit's
+   vendor/makefun-board.ts is the kit-shipped dossier library, copied
+   byte for byte without reading it.
